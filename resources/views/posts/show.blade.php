@@ -19,10 +19,16 @@
 
             <div>Last updated: {{ $post->updated_at->diffForHumans() }}</div>
 
-            <div class="action mb-3 mb-3">
-                <a class="mt-3 btn" style="background: #058e24;" href="{{ route('posts.edit' , $post->slug ) }}">Edit</a>
+            <div class="action mt-4">
+                <a class="btn" style="background: #058e24;" href="{{ route('posts.edit' , $post->slug ) }}">Edit</a>
+              <form class="d-inline" action="{{ route('posts.destroy', $post->id ) }}" method="POST">
+                @csrf
+                @method('DELETE')
+
+                <input class="btn btn-danger" type="submit" value="Delete">
+              </form>
             </div>
-        
+
        </div>
     </main>
 

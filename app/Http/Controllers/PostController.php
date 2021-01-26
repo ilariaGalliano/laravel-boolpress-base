@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at' , 'desc')->get();
+        $posts = Post::orderBy('created_at' , 'desc')->paginate(5);
 
         return view('posts.index' , compact('posts'));
     }
@@ -140,9 +140,23 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+        //method-1: public function destroy($id)
+        public function destroy(Post $post)
     {
-        //
+        // method-1: $post = Post::find($id);
+
+        // method-2: 
+        $title = $post->title;
+        $deleted = $post->delete();
+
+        if($deleted) {
+            if(!empty($post->path_img)){
+                Storage::disk('public')->delete($post->path_img);
+            }
+            return redirect()->route('posts.index')->with('post-deleted' , $title);
+        } else{
+            return redirect()->route('homepage');
+        }
     }
 
     // Validation rules 
