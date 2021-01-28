@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Tag;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
