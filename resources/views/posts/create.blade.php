@@ -35,6 +35,18 @@
                     <input class="form-group" type="file" name="path_img" id="path_img" accept="image/*">
                 </div>
 
+                {{-- Tags --}}
+                <div class="form-group">
+                    @foreach ($tags as $tag)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="tags[]" id="tag-{{ $tag->id }}" value="{{ $tag->id }}">
+                            <label for="tag-{{ $tag->id }}">
+                                {{ $tag->name }}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+
                 <div class="form-group">
                     <input class="btn btn-secondary" type="submit" value="Create">
                 </div>

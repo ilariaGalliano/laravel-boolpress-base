@@ -24,10 +24,20 @@
               <form class="d-inline" action="{{ route('posts.destroy', $post->id ) }}" method="POST">
                 @csrf
                 @method('DELETE')
-
                 <input class="btn btn-danger" type="submit" value="Delete">
               </form>
             </div>
+
+            {{-- Tags --}}
+            <section class="tags">
+              <h4 class="mt-3">TAGS</h4>
+              @forelse ($post->tags as $tag)
+                  <span class="badge badge-secondary">{{ $tag->name }}</span>
+              @empty
+                  <p>No actual tags for this post</p>
+              @endforelse
+            </section>
+
 
        </div>
     </main>

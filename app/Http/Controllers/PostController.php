@@ -29,7 +29,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        //get all tags
+        $tags = Tag::all();
+
+        return view('posts.create', compact('tags'));
     }
 
     /**
@@ -60,11 +63,15 @@ class PostController extends Controller
         $saved = $newPost->save();
 
         if($saved){
+            if(!empty($data['tags'])){
+                $newPost->tags()->attach($data['tags']);
+            }
             return redirect()->route('posts.index');
         } else{
             return redirect()->route('homepage');
         }
     }
+
 
     /**
      * Display the specified resource.
@@ -133,6 +140,12 @@ class PostController extends Controller
         $updated = $post->update($data);
 
         if($updated){
+            if(!empty($data['tags'])){
+                $post->tags()->sync($data['tags']);
+            }else{
+                $post->tags()->detach();
+            }
+
             return redirect()->route('posts.show' , $post->slug);
         } else{
             return redirect()->route('homepage');
